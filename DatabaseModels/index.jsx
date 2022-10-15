@@ -1,7 +1,7 @@
 'use strict';
 
 const { Sequelize, DataTypes } = require( 'sequelize' );
-const user = require( './userModel' );
+const user = require( './user.model' );
 
 const DATABASE_URL = process.env.DATABASE_URL ;
 
