@@ -2,13 +2,13 @@
 
 const { signup, signin, valid, userInfo } = require( '../controllers/user.controller' );
 const bearerAuth = require( '../middlewares/bearerAuth' );
-const {saveUser} = require( '../middlewares/basicAuth' );
+const { basicAuth } = require( '../middlewares/basicAuth' );
 
 const router = require( 'express' ).Router();
 
-router.get( '/user' , bearerAuth, userInfo );
-router.post( '/signup' , saveUser, signup );
-router.post( '/signin' , valid, signin );
+router.get( '/user', bearerAuth, userInfo );
+router.post( '/signup', basicAuth, signup );
+router.post( '/signin', signin );
 
 
 module.exports = router;

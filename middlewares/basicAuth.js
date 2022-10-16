@@ -1,7 +1,7 @@
 // create the basic Auth middleware
 'use strict';
 const User = require('../DatabaseModels/user.model').user
-const saveUser = async (req, res, next) => {
+const basicAuth = async (req, res, next) => {
   try {
     const username = await User.findOne({
       where: {
@@ -25,5 +25,5 @@ const saveUser = async (req, res, next) => {
   }
 };
 module.exports = {
-  saveUser
+  basicAuth
 };
