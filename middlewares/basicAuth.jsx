@@ -1,1 +1,0 @@
-// create the basic Auth middleware
