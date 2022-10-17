@@ -10,6 +10,4 @@ const router = require( 'express' ).Router();
 
 router.post( '/signup', uploadAvatar.single('avatar'), basicAuth, signup );
 router.post( '/signin',  signin );
-
-
 module.exports = router;
