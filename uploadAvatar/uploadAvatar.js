@@ -1,24 +1,21 @@
-// 'use strict';
+'use strict';
 
-// const { userModel } = require( '../DatabaseModels' );
+const multer = require( 'multer' );
+const path = require( 'path' );
 
 
+const storage = multer.diskStorage(
+    {
+        destination: 'avatars/',
+        filename: ( req, file, callBack ) => {
+            callBack( null, file.fieldname + '-' + req.body.username+ path.extname( file.originalname ) );
+        }
+    } );
 
-// const uploadAvatar = async ( req, res ) => {
-//     const { id } = req.user;
-//     const { file } = req;
-//     const { path } = file;
-//     const avatar = path.split( '/' ).pop();
-//     const user = await userModel.findOne( {
-//         where: {
-//             id
-//         }
-//     } );
-//     if ( user ) {
-//         user.avatar = avatar;
-//         await user.save();
-//     await userModel.update( { avatar: location }, { where: { id } } );
-//     res.status( 200 ).send( location );
-// };
-// }
-// module.exports = uploadAvatar;
+const uploadAvatar = multer({
+    storage: storage
+});
+
+module.exports = {
+    uploadAvatar
+}
