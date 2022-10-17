@@ -6,9 +6,9 @@ const { basicAuth } = require( '../middlewares/basicAuth' );
 
 const router = require( 'express' ).Router();
 
-router.get( '/user', bearerAuth, userInfo );
+
 router.post( '/signup', basicAuth, signup );
-router.post( '/signin', signin );
+router.post( '/signin',  signin );
 
 
 module.exports = router;

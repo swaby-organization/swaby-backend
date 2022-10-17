@@ -9,7 +9,6 @@ const signup = async ( req, res ) => {
     try {
         const {
             username,
-            avatar,
             firstName,
             lastName,
             email,
@@ -20,7 +19,6 @@ const signup = async ( req, res ) => {
 
         const userInfo = {
             username,
-            avatar,
             firstName,
             lastName,
             email,

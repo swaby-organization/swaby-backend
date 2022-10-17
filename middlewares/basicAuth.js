@@ -1,6 +1,6 @@
 // create the basic Auth middleware
 'use strict';
-const User = require('../DatabaseModels/user.model').user
+const User = require('../DatabaseModels').userModel
 const basicAuth = async (req, res, next) => {
   try {
     const username = await User.findOne({
@@ -9,7 +9,7 @@ const basicAuth = async (req, res, next) => {
       }
     });
     if (username) {
-      return res.status(409).send('Username Aleady Taken');
+      return res.status(409).send('Username Already Taken');
     }
     const email = await User.findOne({
       where: {

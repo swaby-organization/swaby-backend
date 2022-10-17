@@ -21,7 +21,7 @@ const sequelize = new Sequelize( DATABASE_URL , sequelizeOption );
 const userModel = user( sequelize , DataTypes );
 const itemModel = item( sequelize , DataTypes );
 
-const userCollection = new collection( sequelize, DataTypes );
+const userCollection = new collection( userModel );
 
 userModel.hasMany( itemModel , { foreignKey: 'owner' } );
 itemModel.belongsTo( userModel , { foreignKey: 'owner' } );

@@ -5,11 +5,12 @@ const cors = require( 'cors' );
 const app = express();
 const errorHandler404= require('./error-handlers/404');
 const errorHandler500=require ('./error-handlers/500');
+const router = require( './routes/user.route' );
 
 app.use( cors() );
 app.use( express.json() );
 
-
+app.use(router);
 app.get( '/', ( req, res ) => {
     res.status( 200 ).send( 'Server is up and alive' );
 } );
