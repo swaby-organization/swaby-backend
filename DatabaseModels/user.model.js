@@ -41,9 +41,18 @@ module.exports = ( sequelize, DataTypes ) => {
         token: {
             type: DataTypes.VIRTUAL,
             get () {
-                return jwt.sign( { id: this.id }, process.env.SECRET );
+                return jwt.sign( { username: this.username }, process.env.SECRET );
             }
-        }
+        },
     } );
+    user.authenticateToken = token => {
+        return jwt.verify( token, process.env.SECRET, ( err, decoded ) => {
+            if ( err ) {
+                return err;
+            } else {
+                return decoded;
+            }
+        } );
+    };
     return user;
 };
