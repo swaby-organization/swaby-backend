@@ -3,6 +3,7 @@
 const User = require('../DatabaseModels').userModel
 const basicAuth = async (req, res, next) => {
   try {
+    console.log('reqbody', req.body)
     const username = await User.findOne({
       where: {
         username: req.body.username

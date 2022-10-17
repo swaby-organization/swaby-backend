@@ -7,20 +7,25 @@ const { userModel, userCollection } = require( "../DatabaseModels" );
 
 const signup = async ( req, res ) => {
     try {
+        if (req.file) {
+            req.body.avatar = `${process.env.BACKENDLINK}/${req.file.filename}`;
+        }
         const {
             username,
             firstName,
             lastName,
             email,
             password,
+            avatar,
             country,
             city,
         } = req.body;
-
+        
         const userInfo = {
             username,
             firstName,
             lastName,
+            avatar,
             email,
             password: await bcrypt.hash( password, 10 ),
             country,
