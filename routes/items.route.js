@@ -10,6 +10,7 @@ router.get( '/items/:id', getItemById );
 router.get( '/items/:id', getItemsByUser );
 router.post( '/items', createItem );
 router.put( '/items/:id', updateItem );
+router.delete( '/items/:id', deleteItem );
 
 async function getItemById ( req, res ) {
     try {
@@ -139,6 +140,16 @@ async function updateItem ( req, res ) {
         res.status( 500 ).send( 'Error: Updating item failed' );
     }
 }
+async function deleteItem(req, res) {
+    try {
+      const id = req.params.id;
+      await itemModel.delete(id);
+      res.status(200).send("Item deleted successfuly");
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Error: Deleting the item failed");
+    }
+  }
 
 module.exports = router;
 
