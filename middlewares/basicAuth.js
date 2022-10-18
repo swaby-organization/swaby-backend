@@ -1,6 +1,7 @@
 // create the basic Auth middleware
 'use strict';
 const User = require('../DatabaseModels').userModel
+
 const basicAuth = async (req, res, next) => {
   try {
     console.log('reqbody', req.body)

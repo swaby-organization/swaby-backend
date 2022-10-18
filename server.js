@@ -1,23 +1,27 @@
 'use strict';
 
-const express = require( 'express' );
-const cors = require( 'cors' );
+const express = require('express');
+const cors = require('cors');
 const app = express();
-const errorHandler404= require('./error-handlers/404');
-const errorHandler500=require ('./error-handlers/500');
-const router = require( './routes/user.route' );
-
-app.use( cors() );
-app.use( express.json() );
-app.use( express.static( 'avatars' ) );
+const errorHandler404 = require('./error-handlers/404');
+const errorHandler500 = require('./error-handlers/500');
+const router = require('./routes/user.route');
+const itemRouter = ('./routes/item.route')
+app.use(cors());
+app.use(express.json());
+app.use(express.static('avatars'));
 
 app.use(router);
-app.get( '/', ( req, res ) => {
-    res.status( 200 ).send( 'Server is up and alive' );
-} );
+app.use(itemRouter);
 
-const start = ( port ) => {
-    app.listen( port, () => console.log( `Listening on port ${port}` ) );
+
+
+app.get('/', (req, res) => {
+    res.status(200).send('Server is up and alive');
+});
+
+const start = (port) => {
+    app.listen(port, () => console.log(`Listening on port ${port}`));
 };
 
 app.use(errorHandler404);

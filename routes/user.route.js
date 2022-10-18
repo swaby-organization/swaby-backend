@@ -12,4 +12,4 @@ router.post('/signup', uploadAvatar.single('avatar'), basicAuth, signup);
 router.post('/signin', signin);
 router.get('/userInfo', bearerAuth, userInfo);
 
-module.exports = router;
+module.exports = router;                                                                                                            
