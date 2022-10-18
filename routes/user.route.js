@@ -1,6 +1,6 @@
 'use strict';
 
-const { signup, signin, valid, userInfo } = require( '../controllers/user.controller' );
+const { signup, signin  } = require( '../controllers/user.controller' );
 const bearerAuth = require( '../middlewares/bearerAuth' );
 const { basicAuth } = require( '../middlewares/basicAuth' );
 
