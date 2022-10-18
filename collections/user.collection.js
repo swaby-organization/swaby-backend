@@ -1,5 +1,7 @@
 'use strict';
 
+const { itemModel,userModel } = require("../DatabaseModels");
+
 class userCollections {
     constructor( model ) {
         this.model = model;
@@ -41,6 +43,18 @@ class userCollections {
             return await this.model.destroy( { where: { id } } );
         } catch ( e ) {
             console.error( `Error while deleting the data with id: ${id}` );
+        }
+    }
+
+    async userItems ( userModel, id){
+        try {
+           if (id){
+            return await this.model.findOne({where: {id:id}, include:[itemModel]})
+           } else{
+            return false;
+           }
+        } catch (error) {
+            
         }
     }
 }
