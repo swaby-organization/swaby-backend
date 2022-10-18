@@ -8,14 +8,14 @@ const storage = multer.diskStorage(
     {
         destination: 'avatars/',
         filename: ( req, file, callBack ) => {
-            callBack( null, file.fieldname + '-' + req.body.username+ path.extname( file.originalname ) );
+            callBack( null, file.fieldname + '-' + req.body.username + path.extname( file.originalname ) );
         }
     } );
 
-const uploadAvatar = multer({
+const uploadAvatar = multer( {
     storage: storage
-});
+} );
 
 module.exports = {
     uploadAvatar
-}
+};
