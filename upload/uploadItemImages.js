@@ -2,11 +2,12 @@
 
 const multer = require( 'multer' );
 const path = require( 'path' );
+const uuid = require( 'uuid' ).v4;
 
 const storage = multer.diskStorage( {
     destination: 'itemsImages/',
     filename: ( req, file, callBack ) => {
-        callBack( null, file.fieldname + '-' + req.body.name + path.extname( file.originalname ) );
+        callBack( null, file.fieldname + '-' + req.body.name + '-' + uuid() +path.extname( file.originalname ) );
     }
 } );
 

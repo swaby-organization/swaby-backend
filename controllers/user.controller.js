@@ -3,7 +3,7 @@
 const bcrypt = require( "bcrypt" );
 const base64 = require( "base-64" );
 
-const { userModel, userCollection } = require( "../DatabaseModels" );
+const { userModel, userCollection, itemModel } = require( "../DatabaseModels" );
 
 const signup = async ( req, res ) => {
     try {
@@ -31,7 +31,6 @@ const signup = async ( req, res ) => {
             country,
             city,
         };
-
         const user = await userCollection.create( userInfo );
         if ( user ) {
             res.status( 200 ).json( {
@@ -64,6 +63,7 @@ const signin = async ( req, res ) => {
             where: {
                 username,
             },
+            include: itemModel
         } );
         const valid = await bcrypt.compare( password, user.password );
         if ( valid ) {
@@ -77,6 +77,7 @@ const signin = async ( req, res ) => {
                     country: user.country,
                     city: user.city,
                     avatar: user.avatar,
+                    items: user.items,
                 },
                 token: user.token,
             } );
@@ -88,7 +89,118 @@ const signin = async ( req, res ) => {
     }
 };
 
+async function getUserProfile( req, res ) {
+    try {
+        const id = req.params.id;
+        const user = await userModel.findOne( {
+            where: {
+                id,
+            },
+            include: itemModel,
+        } );
+
+        if ( user ) {
+            res.status( 200 ).json( {
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    country: user.country,
+                    city: user.city,
+                    avatar: user.avatar,
+                    items: user.items,
+                },
+            } );
+        } else {
+            res.status( 500 ).send( 'Error: Getting user profile failed' );
+        }
+    } catch ( error ) {
+        console.log( error );
+        res.status( 500 ).send( 'Error: Getting user profile failed' );
+    }
+}
+
+async function getLoggedInUserInfo( req, res ) {
+    try {
+        const id = req.params.id;
+        const user = await userCollection.read( id );
+        if ( user ) {
+            res.status( 200 ).json( {
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    country: user.country,
+                    city: user.city,
+                    avatar: user.avatar,
+                },
+            } );
+        } else {
+            res.status( 500 ).send( 'Error: Getting user profile failed' );
+        }
+    } catch ( error ) {
+        console.log( error );
+        res.status( 500 ).send( 'Error: Getting user profile failed' );
+    }
+}
+
+async function editUserInfo( req, res ) {
+    try {
+        if (req.file) {
+            req.body.avatar = `${process.env.BACKENDLINK}/${req.file.filename}`;
+        }
+        const id = req.params.id;
+        const {
+            username,
+            firstName,
+            lastName,
+            email,
+            country,
+            city,
+            avatar,
+        } = req.body;
+
+        const userInfo = {
+            username,
+            firstName,
+            lastName,
+            email,
+            country,
+            city,
+            avatar,
+        };
+        
+        const user = await userCollection.update( id, userInfo );
+        if ( user ) {
+            res.status( 200 ).json( {
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    country: user.country,
+                    city: user.city,
+                    avatar: user.avatar,
+                },
+            } );
+        } else {
+            res.status( 500 ).send( 'Error: Updating user info failed' );
+        }
+    } catch ( error ) {
+        console.log( error );
+        res.status( 500 ).send( 'Error: Updating user info failed' );
+    }
+}
+
 module.exports = {
     signup,
     signin,
+    getUserProfile,
+    getLoggedInUserInfo,
+    editUserInfo,
 };
