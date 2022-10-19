@@ -1,9 +1,8 @@
 // create the basic Auth middleware
 'use strict';
 const User = require('../DatabaseModels').userModel
-const basicAuth = async (req, res, next) => {
+const checkDaplicate = async (req, res, next) => {
   try {
-    console.log('reqbody', req.body)
     const username = await User.findOne({
       where: {
         username: req.body.username
@@ -26,5 +25,5 @@ const basicAuth = async (req, res, next) => {
   }
 };
 module.exports = {
-  basicAuth
+  checkDaplicate
 };

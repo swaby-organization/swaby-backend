@@ -5,16 +5,15 @@ const cors = require( 'cors' );
 const app = express();
 const errorHandler404 = require( './error-handlers/404' );
 const errorHandler500 = require( './error-handlers/500' );
-const router = require( './routes/user.route' );
-const router2 = require( './routes/userInfo.route' );
-const router3 = require( './routes/items.route' );
+const userEndPoints = require( './routes/user.route' );
+const itemsEndPoints = require( './routes/items.route' );
 
 app.use( cors() );
 app.use( express.json() );
 app.use( express.static( 'avatars' ) );
-app.use( router );
-app.use( router2 );
-app.use( router3 );
+app.use( express.static( 'itemsImages' ) );
+app.use( userEndPoints );
+app.use( itemsEndPoints );
 
 app.get( '/', ( req, res ) => {
     res.status( 200 ).send( 'Server is up and alive' );

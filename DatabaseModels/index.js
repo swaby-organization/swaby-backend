@@ -3,7 +3,7 @@
 const { Sequelize, DataTypes } = require( 'sequelize' );
 const user = require( './user.model' );
 const item = require( './item.model' );
-const collection = require( '../collections/user.collection' );
+const Collection = require( '../collections/collection' );
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
@@ -21,8 +21,8 @@ const sequelize = new Sequelize( DATABASE_URL, sequelizeOption );
 const userModel = user( sequelize, DataTypes );
 const itemModel = item( sequelize, DataTypes );
 
-const userCollection = new collection( userModel );
-const itemCollection = new collection( itemModel );
+const userCollection = new Collection( userModel );
+const itemCollection = new Collection( itemModel );
 
 userModel.hasMany( itemModel, { foreignKey: 'owner' } );
 itemModel.belongsTo( userModel, { foreignKey: 'owner' } );
