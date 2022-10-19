@@ -4,6 +4,7 @@ const { itemCollection, itemModel, userModel } = require( '../DatabaseModels' );
 
 async function getItemById ( req, res ) {
     try {
+        const id = req.params.id;
         const item = await itemCollection.read( id, userModel );
         if ( item ) {
             res.status( 200 ).json( {
@@ -39,10 +40,10 @@ async function getItemById ( req, res ) {
 
 async function getItemsByUser ( req, res ) {
     try {
-        const id = req.params.id;
+        const userid = req.params.userid;
         const items = await itemModel.findAll( {
             where: {
-                owner: id
+                owner: userid
             }
         } );
         if ( items ) {
