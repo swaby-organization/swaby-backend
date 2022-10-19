@@ -1,7 +1,7 @@
 'use strict';
 
 const { signup, signin } = require( '../controllers/user.controller' );
-const { checkDaplicate } = require( '../middlewares/checkDaplicate' );
+const { checkDuplicate } = require( '../middlewares/checkDuplicate' );
 const { getUserProfile, getLoggedInUserInfo, editUserInfo } = require( '../controllers/user.controller' );
 const { uploadAvatar } = require( '../upload/uploadAvatar' );
 const bearerAuth = require( '../middlewares/bearerAuth' );
@@ -9,7 +9,7 @@ const router = require( 'express' ).Router();
 
 
 
-router.post( '/signup', uploadAvatar.single( 'avatar' ), checkDaplicate, signup );
+router.post( '/signup', uploadAvatar.single( 'avatar' ), checkDuplicate, signup );
 router.post( '/signin', signin );
 router.get( '/userprofile/:id', getUserProfile );
 router.get( '/userinfo/:id', bearerAuth, getLoggedInUserInfo );
