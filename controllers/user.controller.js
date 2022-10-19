@@ -125,7 +125,7 @@ async function getUserProfile( req, res ) {
 async function getLoggedInUserInfo( req, res ) {
     try {
         const id = req.params.id;
-        const user = await userCollection.read( id );
+        const user = await userCollection.read( id , itemModel);
         if ( user ) {
             res.status( 200 ).json( {
                 user: {
@@ -137,6 +137,7 @@ async function getLoggedInUserInfo( req, res ) {
                     country: user.country,
                     city: user.city,
                     avatar: user.avatar,
+                    items: user.items,
                 },
             } );
         } else {
@@ -176,6 +177,7 @@ async function editUserInfo( req, res ) {
         
         const user = await userCollection.update( id, userInfo );
         if ( user ) {
+            userCollection.read( id, itemModel ).then( ( user ) => {
             res.status( 200 ).json( {
                 user: {
                     id: user.id,
@@ -186,8 +188,10 @@ async function editUserInfo( req, res ) {
                     country: user.country,
                     city: user.city,
                     avatar: user.avatar,
+                    items: user.items,
                 },
             } );
+        } );
         } else {
             res.status( 500 ).send( 'Error: Updating user info failed' );
         }
