@@ -14,8 +14,6 @@ module.exports = async ( req, res, next ) => {
                 }
             } );
             if ( userAuth ) {
-                req.userAuth = userAuth;
-                req.token = user.token;
                 next();
             } else {
                 res.status(401).send( 'Invalid Login' );
