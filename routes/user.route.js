@@ -1,13 +1,18 @@
 'use strict';
 
-const { signup, signin, valid, userInfo } = require( '../controllers/user.controller' );
+const { signup, signin } = require( '../controllers/user.controller' );
+const { checkDaplicate } = require( '../middlewares/checkDaplicate' );
+const { getUserProfile, getLoggedInUserInfo, editUserInfo } = require( '../controllers/user.controller' );
+const { uploadAvatar } = require( '../upload/uploadAvatar' );
 const bearerAuth = require( '../middlewares/bearerAuth' );
-const { basicAuth } = require( '../middlewares/basicAuth' );
-const { uploadAvatar } = require( '../uploadAvatar/uploadAvatar' );
-
 const router = require( 'express' ).Router();
 
 
-router.post( '/signup', uploadAvatar.single('avatar'), basicAuth, signup );
-router.post( '/signin',  signin );
+
+router.post( '/signup', uploadAvatar.single( 'avatar' ), checkDaplicate, signup );
+router.post( '/signin', signin );
+router.get( '/userprofile/:id', getUserProfile );
+router.get( '/userinfo/:id', bearerAuth, getLoggedInUserInfo );
+router.post( '/userinfo/:id', uploadAvatar.single( 'avatar' ), bearerAuth, editUserInfo );
+
 module.exports = router;

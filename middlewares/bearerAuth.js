@@ -8,7 +8,7 @@ module.exports = async ( req, res, next ) => {
         const token = req.headers.authorization.split( ' ' ).pop();
         try {
             const validUser = await userModel.authenticateToken( token );
-            const userAuth = await user.findOne( {
+            const userAuth = await userModel.findOne( {
                 where: {
                     username: validUser.username
                 }
