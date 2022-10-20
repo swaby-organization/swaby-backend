@@ -45,10 +45,9 @@ async function getItemsByUser(req, res) {
             where: {
                 owner: userid
             }
-        });
-        if (items) {
-
-            res.status(200).json({
+        } );
+        if ( items ) {
+            res.status( 200 ).json( {
                 items: items,
             });
         } else {
@@ -151,10 +150,26 @@ async function updateItem(req, res) {
     }
 }
 
+async function deleteItem ( req, res ) {
+    try {
+        const id = req.params.id;
+        const item = await itemCollection.delete( id );
+        if ( item ) {
+            res.status( 200 ).send( 'Item deleted' );
+        } else {
+            res.status( 500 ).send( 'Error: Deleting item failed' );
+        }
+    } catch ( error ) {
+        console.log( error );
+        res.status( 500 ).send( 'Error: Deleting item failed' );
+    }
+}
+
 module.exports = {
     createItem,
     getItemById,
     getItemsByUser,
     getAllItems,
     updateItem,
+    deleteItem
 };

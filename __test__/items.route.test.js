@@ -50,7 +50,7 @@ describe('check item endpoints ', () => {
   });
 
   it('check delete item by id', async () => {
-    const res = await request.delete('/items/6');
+    const res = await request.delete('/items/11');
     expect(res.status).toEqual(200);
   }
   );
