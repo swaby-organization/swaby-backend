@@ -7,7 +7,7 @@ const errorHandler404 = require( './error-handlers/404' );
 const errorHandler500 = require( './error-handlers/500' );
 const userEndPoints = require( './routes/user.route' );
 const itemsEndPoints = require( './routes/items.route' );
-
+require( 'dotenv' ).config();
 app.use( cors() );
 app.use( express.json() );
 app.use( express.static( 'avatars' ) );
