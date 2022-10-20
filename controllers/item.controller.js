@@ -1,13 +1,13 @@
 'use strict';
 
-const { itemCollection, itemModel, userModel } = require( '../DatabaseModels' );
+const { itemCollection, itemModel, userModel } = require('../DatabaseModels');
 
-async function getItemById ( req, res ) {
+async function getItemById(req, res) {
     try {
         const id = req.params.id;
-        const item = await itemCollection.read( id, userModel );
-        if ( item ) {
-            res.status( 200 ).json( {
+        const item = await itemCollection.read(id, userModel);
+        if (item) {
+            res.status(200).json({
                 item: {
                     id: item.id,
                     name: item.name,
@@ -28,70 +28,69 @@ async function getItemById ( req, res ) {
                         avatar: item.user.avatar,
                     }
                 },
-            } );
+            });
         } else {
-            res.status( 500 ).send( 'Error: Getting item failed' );
+            res.status(500).send('Error: Getting item failed');
         }
-    } catch ( error ) {
-        console.log( error );
-        res.status( 500 ).send( 'Error: Getting item failed' );
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error: Getting item failed');
     }
 }
 
-async function getItemsByUser ( req, res ) {
+async function getItemsByUser(req, res) {
     try {
         const userid = req.params.userid;
-        const items = await itemModel.findAll( {
+        const items = await itemModel.findAll({
             where: {
                 owner: userid
             }
         } );
         if ( items ) {
-
             res.status( 200 ).json( {
                 items: items,
-            } );
+            });
         } else {
-            res.status( 500 ).send( 'Error: Getting items failed' );
+            res.status(500).send('Error: Getting items failed');
         }
-    } catch ( error ) {
-        console.log( error );
-        res.status( 500 ).send( 'Error: Getting items failed' );
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error: Getting items failed');
     }
 }
 
-async function getAllItems ( req, res ) {
+async function getAllItems(req, res) {
     try {
-        const items = await itemCollection.read( null, userModel );
+        const items = await itemCollection.read(null, userModel);
 
-        if ( items ) {
-            res.status( 200 ).json( {
+        if (items) {
+            res.status(200).json({
                 items: items
-            } );
+            });
         } else {
-            res.status( 500 ).send( 'Error: Getting items failed' );
+            res.status(500).send('Error: Getting items failed');
         }
-    } catch ( error ) {
-        console.log( error );
-        res.status( 500 ).send( 'Error: Getting items failed' );
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error: Getting items failed');
     }
 }
 
 
-async function createItem ( req, res ) {
+async function createItem(req, res) {
     try {
-        req.body.estimatedValue = parseInt( req.body.estimatedValue );
-        req.body.owner = parseInt( req.body.owner );
-        if ( req.files ) {
+        req.body.estimatedValue = parseInt(req.body.estimatedValue);
+        req.body.owner = parseInt(req.body.owner);
+        if (req.files) {
             let arr = [];
-            req.files.forEach( element => {
-                arr.push( `${process.env.BACKENDLINK}/${element.filename}` );
-            } );;
+            req.files.forEach(element => {
+                arr.push(`${process.env.BACKENDLINK}/${element.filename}`);
+            });;
             req.body.uploadedImages = arr;
         }
-        const item = await itemCollection.create( req.body );
-        if ( item ) {
-            res.status( 200 ).json( {
+        const item = await itemCollection.create(req.body);
+        if (item) {
+            res.status(200).json({
                 item: {
                     id: item.id,
                     name: item.name,
@@ -104,31 +103,31 @@ async function createItem ( req, res ) {
                     countryOfSwap: item.countryOfSwap,
                     owner: item.owner,
                 },
-            } );
+            });
         } else {
-            res.status( 500 ).send( 'Error: Creating item failed' );
+            res.status(500).send('Error: Creating item failed');
         }
-    } catch ( error ) {
-        console.log( error );
-        res.status( 500 ).send( 'Error: Creating item failed' );
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error: Creating item failed');
     }
 }
 
-async function updateItem ( req, res ) {
+async function updateItem(req, res) {
     try {
         const id = req.params.id;
-        req.body.estimatedValue = parseInt( req.body.estimatedValue );
-        req.body.owner = parseInt( req.body.owner );
-        if ( req.files ) {
+        req.body.estimatedValue = parseInt(req.body.estimatedValue);
+        req.body.owner = parseInt(req.body.owner);
+        if (req.files) {
             let arr = [];
-            req.files.forEach( element => {
-                arr.push( `${process.env.BACKENDLINK}/${element.filename}` );
-            } );;
+            req.files.forEach(element => {
+                arr.push(`${process.env.BACKENDLINK}/${element.filename}`);
+            });;
             req.body.uploadedImages = arr;
         }
-        const item = await itemCollection.update( id, req.body );
-        if ( item ) {
-            res.status( 200 ).json( {
+        const item = await itemCollection.update(id, req.body);
+        if (item) {
+            res.status(200).json({
                 item: {
                     id: item.id,
                     name: item.name,
@@ -141,13 +140,13 @@ async function updateItem ( req, res ) {
                     countryOfSwap: item.countryOfSwap,
                     owner: item.owner,
                 },
-            } );
+            });
         } else {
-            res.status( 500 ).send( 'Error: Updating item failed' );
+            res.status(500).send('Error: Updating item failed');
         }
-    } catch ( error ) {
-        console.log( error );
-        res.status( 500 ).send( 'Error: Updating item failed' );
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error: Updating item failed');
     }
 }
 
