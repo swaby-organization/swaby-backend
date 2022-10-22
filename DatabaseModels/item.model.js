@@ -38,6 +38,10 @@ module.exports = ( sequelize, DataTypes ) => {
             type: DataTypes.ARRAY( DataTypes.STRING ),
             allowNull: false
         },
+        status: {
+            type: DataTypes.ENUM( 'active', 'pending', 'swapped'),
+            defaultValue: 'active'
+        },
     } );
     return item;
 }
