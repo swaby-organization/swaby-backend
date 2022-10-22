@@ -18,6 +18,7 @@ async function getItemById(req, res) {
                     swapFor: item.swapFor,
                     cityOfSwap: item.cityOfSwap,
                     countryOfSwap: item.countryOfSwap,
+                    status: item.status,
                     owner: item.owner,
                     user: {
                         id: item.user.id,
@@ -43,7 +44,8 @@ async function getItemsByUser(req, res) {
         const userid = req.params.userid;
         const items = await itemModel.findAll({
             where: {
-                owner: userid
+                owner: userid,
+                status: 'active'
             }
         } );
         if ( items ) {
@@ -61,7 +63,12 @@ async function getItemsByUser(req, res) {
 
 async function getAllItems(req, res) {
     try {
-        const items = await itemCollection.read(null, userModel);
+        const items = await itemModel.findAll({
+            where: {
+                status: 'active'
+            },
+            include: userModel
+        });
 
         if (items) {
             res.status(200).json({
@@ -101,6 +108,7 @@ async function createItem(req, res) {
                     swapFor: item.swapFor,
                     cityOfSwap: item.cityOfSwap,
                     countryOfSwap: item.countryOfSwap,
+                    status: item.status,
                     owner: item.owner,
                 },
             });
@@ -138,6 +146,7 @@ async function updateItem(req, res) {
                     swapFor: item.swapFor,
                     cityOfSwap: item.cityOfSwap,
                     countryOfSwap: item.countryOfSwap,
+                    status: item.status,
                     owner: item.owner,
                 },
             });
