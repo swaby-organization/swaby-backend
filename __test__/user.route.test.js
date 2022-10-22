@@ -18,6 +18,12 @@ describe( 'check user endpoints ', () => {
         expect( res.status ).toEqual( 200 );
     } );
 
+
+  it('check user signin', async () => {
+    const res = await request.post('/signin').auth("test123", "test");
+    expect(res.status).toEqual(200);
+  });
+
     it( 'test get user profile by id', async () => {
         const res = await request.get( '/userprofile/1' );
         expect( res.status ).toEqual( 200 );
