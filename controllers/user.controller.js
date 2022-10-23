@@ -30,6 +30,7 @@ const signup = async ( req, res ) => {
             password: await bcrypt.hash( password, 10 ),
             country,
             city,
+            
         };
         const user = await userCollection.create( userInfo );
         if ( user ) {
@@ -42,6 +43,7 @@ const signup = async ( req, res ) => {
                     email: user.email,
                     country: user.country,
                     city: user.city,
+                    points:user.points,
                     avatar: user.avatar,
                 },
                 token: user.token,
@@ -56,6 +58,7 @@ const signup = async ( req, res ) => {
 };
 
 const signin = async ( req, res ) => {
+    
     try {
         const basicAuth = req.headers.authorization.split( " " ).pop();
         const [ username, password ] = base64.decode( basicAuth ).split( ":" );
@@ -77,14 +80,15 @@ const signin = async ( req, res ) => {
                     country: user.country,
                     city: user.city,
                     avatar: user.avatar,
-                    items: user.items,
+                    points:user.points,
+                    items: user.items
                 },
                 token: user.token,
             } );
         }
         return res.status( 401 ).send( "You are not authorized" );
     } catch ( err ) {
-        console.log( err );
+        // console.log( err );
         return res.status( 401 ).send( "You are not authorized" );
     }
 };
@@ -110,6 +114,7 @@ async function getUserProfile( req, res ) {
                     country: user.country,
                     city: user.city,
                     avatar: user.avatar,
+                    points:user.points,
                     items: user.items,
                 },
             } );
@@ -137,6 +142,7 @@ async function getLoggedInUserInfo( req, res ) {
                     country: user.country,
                     city: user.city,
                     avatar: user.avatar,
+                    points:user.points,
                     items: user.items,
                 },
             } );
@@ -163,6 +169,7 @@ async function editUserInfo( req, res ) {
             country,
             city,
             avatar,
+            points
         } = req.body;
 
         const userInfo = {
@@ -173,6 +180,7 @@ async function editUserInfo( req, res ) {
             country,
             city,
             avatar,
+            points
         };
         
         const user = await userCollection.update( id, userInfo );
@@ -188,6 +196,7 @@ async function editUserInfo( req, res ) {
                     country: user.country,
                     city: user.city,
                     avatar: user.avatar,
+                    points:user.points,
                     items: user.items,
                 },
             } );

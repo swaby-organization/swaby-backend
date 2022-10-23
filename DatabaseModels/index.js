@@ -16,13 +16,15 @@ const sequelizeOption = {
     }
 };
 
-const sequelize = new Sequelize( DATABASE_URL, sequelizeOption );
-
-const userModel = user( sequelize, DataTypes );
-const itemModel = item( sequelize, DataTypes );
-
-const userCollection = new Collection( userModel );
-const itemCollection = new Collection( itemModel );
+const sequelize = new Sequelize( DATABASE_URL, 
+    sequelizeOption 
+    );
+    const userModel = user( sequelize, DataTypes );
+    const itemModel = item( sequelize, DataTypes );
+    
+    const userCollection = new Collection( userModel );
+    const itemCollection = new Collection( itemModel );
+    console.log("===============",itemModel)
 
 userModel.hasMany( itemModel, { foreignKey: 'owner' } );
 itemModel.belongsTo( userModel, { foreignKey: 'owner' } );
