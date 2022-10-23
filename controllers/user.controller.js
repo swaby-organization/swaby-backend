@@ -43,6 +43,7 @@ const signup = async ( req, res ) => {
                     country: user.country,
                     city: user.city,
                     avatar: user.avatar,
+                    points: user.points
                 },
                 token: user.token,
             } );
@@ -67,6 +68,7 @@ const signin = async ( req, res ) => {
         } );
         const valid = await bcrypt.compare( password, user.password );
         if ( valid ) {
+            await userCollection.update(user.id,{...user, points: user.points + 1} )
             return res.status( 200 ).json( {
                 user: {
                     id: user.id,
@@ -78,6 +80,7 @@ const signin = async ( req, res ) => {
                     city: user.city,
                     avatar: user.avatar,
                     items: user.items,
+                    points:user.points
                 },
                 token: user.token,
             } );
