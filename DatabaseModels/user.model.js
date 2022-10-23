@@ -38,6 +38,10 @@ module.exports = ( sequelize, DataTypes ) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        points: {
+            type: DataTypes.INTEGER,
+            defaultValue: 10
+        },
         token: {
             type: DataTypes.VIRTUAL,
             get () {
