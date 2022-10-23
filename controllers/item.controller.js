@@ -1,6 +1,6 @@
 'use strict';
 
-const { itemCollection, itemModel, userModel } = require('../DatabaseModels');
+const { itemCollection, userCollection, itemModel, userModel } = require('../DatabaseModels');
 
 async function getItemById(req, res) {
     try {
@@ -97,6 +97,12 @@ async function createItem(req, res) {
         }
         const item = await itemCollection.create(req.body);
         if (item) {
+            const user = await userModel.findOne( {
+                where: {
+                    id:item.owner,
+                }
+            } );
+            await userCollection.update( item.owner, {...user, points: user.points + 3})
             res.status(200).json({
                 item: {
                     id: item.id,
