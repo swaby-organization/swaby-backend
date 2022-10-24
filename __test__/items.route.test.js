@@ -49,11 +49,11 @@ describe('check item endpoints ', () => {
     expect(res.status).toEqual(200);
   });
 
- /*  it('check delete item by id', async () => {
+  it('check delete item by id', async () => {
     const res = await request.delete('/items/9');
     expect(res.status).toEqual(200);
   }
-  ); */
+  );
 });
 
 
