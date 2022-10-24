@@ -6,10 +6,10 @@ describe( 'check user endpoints ', () => {
 
     it( 'check user signup', async () => {
         const res = await request.post( '/signup' ).send( {
-            "username": "test12345",
+            "username": "test1",
             "firstName": "test",
             "lastName": "test",
-            "email": "test1234@test.com",
+            "email": "test1@test.com",
             "password": "test",
             "city": "test",
             "country": "test",
@@ -20,7 +20,7 @@ describe( 'check user endpoints ', () => {
 
 
   it('check user signin', async () => {
-    const res = await request.post('/signin').auth("test12345", "test");
+    const res = await request.post('/signin').auth("test1", "test");
     expect(res.status).toEqual(200);
   });
 
