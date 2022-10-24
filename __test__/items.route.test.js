@@ -10,7 +10,7 @@ describe('check item endpoints ', () => {
   });
 
   it('check get one item by ID ', async () => {
-    const res = await request.get('/items/1');
+    const res = await request.get('/items/2');
     expect(res.status).toEqual(200);
   });
 
@@ -35,7 +35,7 @@ describe('check item endpoints ', () => {
   });
 
   it('check edit item by id', async () => {
-    const res = await request.post('/items/1').send({
+    const res = await request.post('/items/6').send({
       "name": "item",
       "description": "item description",
       "estimatedValue": 25,
@@ -50,7 +50,7 @@ describe('check item endpoints ', () => {
   });
 
   it('check delete item by id', async () => {
-    const res = await request.delete('/items/11');
+    const res = await request.delete('/items/9');
     expect(res.status).toEqual(200);
   }
   );
