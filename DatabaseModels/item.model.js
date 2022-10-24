@@ -10,8 +10,12 @@ module.exports = ( sequelize, DataTypes ) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        estimatedValue: {
+        sellingPrice: {
             type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        sellingStatus: {
+            type: DataTypes.BOOLEAN,
             allowNull: false
         },
         category: {

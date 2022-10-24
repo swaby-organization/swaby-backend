@@ -12,7 +12,8 @@ async function getItemById(req, res) {
                     id: item.id,
                     name: item.name,
                     description: item.description,
-                    estimatedValue: item.estimatedValue,
+                    sellingPrice: item.sellingPrice,
+                    sellingStatus: item.sellingStatus,
                     uploadedImages: item.uploadedImages,
                     category: item.category,
                     swapFor: item.swapFor,
@@ -86,7 +87,7 @@ async function getAllItems(req, res) {
 
 async function createItem(req, res) {
     try {
-        req.body.estimatedValue = parseInt(req.body.estimatedValue);
+        req.body.sellingPrice = parseInt(req.body.sellingPrice);
         req.body.owner = parseInt(req.body.owner);
         if (req.files) {
             let arr = [];
@@ -108,7 +109,8 @@ async function createItem(req, res) {
                     id: item.id,
                     name: item.name,
                     description: item.description,
-                    estimatedValue: item.estimatedValue,
+                    sellingPrice: item.sellingPrice,
+                    sellingStatus: item.sellingStatus,
                     uploadedImages: item.uploadedImages,
                     category: item.category,
                     swapFor: item.swapFor,
@@ -130,7 +132,7 @@ async function createItem(req, res) {
 async function updateItem(req, res) {
     try {
         const id = req.params.id;
-        req.body.estimatedValue = parseInt(req.body.estimatedValue);
+        req.body.sellingPrice = parseInt(req.body.sellingPrice);
         req.body.owner = parseInt(req.body.owner);
         if (req.files) {
             let arr = [];
@@ -146,7 +148,8 @@ async function updateItem(req, res) {
                     id: item.id,
                     name: item.name,
                     description: item.description,
-                    estimatedValue: item.estimatedValue,
+                    sellingPrice: item.sellingPrice,
+                    sellingStatus: item.sellingStatus,
                     uploadedImages: item.uploadedImages,
                     category: item.category,
                     swapFor: item.swapFor,
