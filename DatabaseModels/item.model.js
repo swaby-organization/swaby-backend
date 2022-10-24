@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = ( sequelize, DataTypes ) => {
-    const item = sequelize.define( 'item', {
+module.exports = (sequelize, DataTypes) => {
+    const item = sequelize.define('item', {
         name: {
             type: DataTypes.STRING,
             allowNull: false
@@ -35,13 +35,13 @@ module.exports = ( sequelize, DataTypes ) => {
             allowNull: false
         },
         uploadedImages: {
-            type: DataTypes.ARRAY( DataTypes.STRING ),
+            type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false
         },
         status: {
-            type: DataTypes.ENUM( 'active', 'pending', 'swapped'),
+            type: DataTypes.ENUM('active', 'pending', 'swapped'),
             defaultValue: 'active'
         },
-    } );
+    });
     return item;
 }

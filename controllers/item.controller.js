@@ -20,6 +20,7 @@ async function getItemById(req, res) {
                     countryOfSwap: item.countryOfSwap,
                     status: item.status,
                     owner: item.owner,
+
                     user: {
                         id: item.user.id,
                         username: item.user.username,
@@ -47,9 +48,9 @@ async function getItemsByUser(req, res) {
                 owner: userid,
                 status: 'active'
             }
-        } );
-        if ( items ) {
-            res.status( 200 ).json( {
+        });
+        if (items) {
+            res.status(200).json({
                 items: items,
             });
         } else {
@@ -110,6 +111,8 @@ async function createItem(req, res) {
                     countryOfSwap: item.countryOfSwap,
                     status: item.status,
                     owner: item.owner,
+
+
                 },
             });
         } else {
@@ -148,6 +151,7 @@ async function updateItem(req, res) {
                     countryOfSwap: item.countryOfSwap,
                     status: item.status,
                     owner: item.owner,
+
                 },
             });
         } else {
@@ -159,18 +163,18 @@ async function updateItem(req, res) {
     }
 }
 
-async function deleteItem ( req, res ) {
+async function deleteItem(req, res) {
     try {
         const id = req.params.id;
-        const item = await itemCollection.delete( id );
-        if ( item ) {
-            res.status( 200 ).send( 'Item deleted' );
+        const item = await itemCollection.delete(id);
+        if (item) {
+            res.status(200).send('Item deleted');
         } else {
-            res.status( 500 ).send( 'Error: Deleting item failed' );
+            res.status(500).send('Error: Deleting item failed');
         }
-    } catch ( error ) {
-        console.log( error );
-        res.status( 500 ).send( 'Error: Deleting item failed' );
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error: Deleting item failed');
     }
 }
 
