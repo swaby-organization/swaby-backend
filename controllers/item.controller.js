@@ -32,11 +32,11 @@ async function getItemById(req, res) {
                 },
             });
         } else {
-            res.status(500).send('Error: Getting item failed');
+            res.status(500).send(`Error: Getting item with id ${id} failed`);
         }
     } catch (error) {
         console.log(error);
-        res.status(500).send('Error: Getting item failed');
+        res.status(500).send(`Error: Getting item with id ${id} failed`);
     }
 }
 
@@ -54,11 +54,11 @@ async function getItemsByUser(req, res) {
                 items: items,
             });
         } else {
-            res.status(500).send('Error: Getting items failed');
+            res.status(500).send(`Error: Getting items for user with id ${userid} failed`);
         }
     } catch (error) {
         console.log(error);
-        res.status(500).send('Error: Getting items failed');
+        res.status(500).send(`Error: Getting items for user with id ${userid} failed`);
     }
 }
 
@@ -76,11 +76,11 @@ async function getAllItems(req, res) {
                 items: items
             });
         } else {
-            res.status(500).send('Error: Getting items failed');
+            res.status(500).send('Error: Getting All items failed');
         }
     } catch (error) {
         console.log(error);
-        res.status(500).send('Error: Getting items failed');
+        res.status(500).send('Error: Getting All items failed');
     }
 }
 
@@ -160,11 +160,11 @@ async function updateItem(req, res) {
                 },
             });
         } else {
-            res.status(500).send('Error: Updating item failed');
+            res.status(500).send(`Error: Updating item with id ${id} failed`);
         }
     } catch (error) {
         console.log(error);
-        res.status(500).send('Error: Updating item failed');
+        res.status(500).send(`Error: Updating item with id ${id} failed`);
     }
 }
 
@@ -172,14 +172,15 @@ async function deleteItem ( req, res ) {
     try {
         const id = req.params.id;
         const item = await itemCollection.delete( id );
+        console.log( item );
         if ( item ) {
-            res.status( 200 ).send( 'Item deleted' );
+            res.status( 200 ).send( `Item with id ${id} deleted successfully` );
         } else {
-            res.status( 500 ).send( 'Error: Deleting item failed' );
+            res.status( 500 ).send( `Error: Deleting item with id ${id} failed` );
         }
     } catch ( error ) {
         console.log( error );
-        res.status( 500 ).send( 'Error: Deleting item failed' );
+        res.status( 500 ).send( `Error: Deleting item with id ${id} failed` );
     }
 }
 
