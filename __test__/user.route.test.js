@@ -6,23 +6,23 @@ describe( 'check user endpoints ', () => {
 
     it( 'check user signup', async () => {
         const res = await request.post( '/signup' ).send( {
-            "username": "test1",
+            "username": "testZaid",
             "firstName": "test",
             "lastName": "test",
-            "email": "test1@test.com",
+            "email": "testZaid@test.com",
             "password": "test",
             "city": "test",
             "country": "test",
             "avatar": "test"
         } );
         expect( res.status ).toEqual( 200 );
-        expect( res.body.username ).toEqual( 'test1' );
+        expect( res.body.username ).toEqual( 'testZaid' );
         expect(res.headers['set-cookie']).toBeDefined();
     } );
 
 
   it('check user signin', async () => {
-    const res = await request.post('/signin').auth("test1", "test");
+    const res = await request.post('/signin').auth("testZaid", "test");
     expect(res.status).toEqual(200);
     expect(res.body.token).toBeDefined();
   });
