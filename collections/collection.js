@@ -9,6 +9,7 @@ class Collection {
         try {
             return await this.model.create( obj );
         } catch ( error ) {
+            console.log('object :>> ', obj);
             console.error( 'Error during the creation' );
         }
     }
