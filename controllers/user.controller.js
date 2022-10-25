@@ -141,6 +141,7 @@ async function getLoggedInUserInfo( req, res ) {
                     city: user.city,
                     avatar: user.avatar,
                     items: user.items,
+                    points: user.points
                 },
             } );
         } else {
