@@ -3,7 +3,6 @@ require( 'dotenv' ).config();
 const { Sequelize, DataTypes } = require( 'sequelize' );
 const user = require( './user.model' );
 const item = require( './item.model' );
-const chat = require( './chat.model' );
 const Collection = require( '../collections/collection' );
 
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -21,7 +20,6 @@ const sequelize = new Sequelize( DATABASE_URL, sequelizeOption );
 
 const userModel = user( sequelize, DataTypes );
 const itemModel = item( sequelize, DataTypes );
-const chatModel = chat( sequelize, DataTypes );
 
 const userCollection = new Collection( userModel );
 const itemCollection = new Collection( itemModel );
