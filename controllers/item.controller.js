@@ -89,6 +89,7 @@ async function createItem(req, res) {
     try {
         req.body.sellingPrice = parseInt(req.body.sellingPrice);
         req.body.owner = parseInt(req.body.owner);
+        req.body.sellingStatus = !!req.body.sellingStatus;
         if (req.files) {
             let arr = [];
             req.files.forEach(element => {
@@ -96,13 +97,14 @@ async function createItem(req, res) {
             });;
             req.body.uploadedImages = arr;
         }
-        const item = await itemCollection.create(req.body);
+        const item = await itemModel.create(req.body);
         if (item) {
             const user = await userModel.findOne( {
                 where: {
                     id:item.owner,
                 }
             } );
+            console.log( 'user',user );
             await userCollection.update( item.owner, {...user, points: user.points + 3})
             res.status(200).json({
                 item: {
@@ -124,7 +126,6 @@ async function createItem(req, res) {
             res.status(500).send('Error: Creating item failed');
         }
     } catch (error) {
-        console.log(error);
         res.status(500).send('Error: Creating item failed');
     }
 }

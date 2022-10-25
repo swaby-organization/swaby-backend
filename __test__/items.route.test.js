@@ -2,173 +2,82 @@ const supertest = require( 'supertest' );
 const server = require( '../server' );
 const request = supertest( server.app );
 jest.setTimeout( 60000 );
-xdescribe( 'check item endpoints ', () => {
 
-  it( 'check get all items ', async () => {
-    const res = await request.get( '/items' );
-    expect( res.status ).toEqual( 200 );
-  } );
 
-  it( 'check get one item by ID ', async () => {
-    const res = await request.get( '/items/2' );
-    expect( res.status ).toEqual( 200 );
-  } );
-
-  it( 'check get ItemsByUser', async () => {
-    const res = await request.get( '/itemsbyuser/1' );
-    expect( res.status ).toEqual( 200 );
-  } );
-
-  /*  it('check create item', async () => {
-     const res = await request.post('/items').send({
-       "name": "item",
-       "description": "item description",
-       "estimatedValue": 25,
-       "sellingStatus": "true",
-       "category": "Antique",
-       "owner": 1,
-       "cityOfSwap": "Amman",
-       "countryOfSwap": "Jordan",
-       "swapFor": "Anything",
-       "uploadedImages": ['']
-     });
-     expect(res.status).toEqual(200);
-   }); */
-
-  it( 'check edit item by id', async () => {
-    const res = await request.post( '/items/6' ).send( {
-      "name": "item",
-      "description": "item description",
-      "estimatedValue": 25,
-      "category": "Antique",
+describe( 'check item endpoints ', () => {
+  it('check create item', async () => {
+    const res = await request.post('/items').send({
+      "name": "test item",
+      "description": "test description",
+      "sellingPrice": 10,
+      "sellingStatus": true,
+      "category": "test category",
       "owner": 1,
       "cityOfSwap": "Amman",
       "countryOfSwap": "Jordan",
-      "swapFor": "Anything",
-      "uploadedImages": [ '' ]
-    } );
-    expect( res.status ).toEqual( 200 );
-  } );
+      "swapFor": "test swap",
+    });
+    expect(res.status).toEqual(200);
+    expect(res.body.item.name).toEqual('test item');
+    expect(res.body.item.description).toEqual('test description');
+    expect(res.body.item.sellingPrice).toEqual(10);
+    expect(res.body.item.sellingStatus).toEqual(true);
+    expect(res.body.item.owner).toEqual(1);
+    expect(res.body.item.cityOfSwap).toEqual('Amman');
+    expect(res.body.item.countryOfSwap).toEqual('Jordan');
+    expect(res.body.item.swapFor).toEqual('test swap');
+  });
 
-  it( 'check delete item by id', async () => {
-    const res = await request.delete( '/items/2' );
-    expect( res.status ).toEqual( 200 );
-  }
-  );
-} );
+  it('check get all items', async () => {
+    const res = await request.get('/items');
+    expect(res.status).toEqual(200);
+    expect(res.body.items[0].name).toEqual('test item');
+    expect(res.body.items[0].description).toEqual('test description');
+    expect(res.body.items[0].sellingPrice).toEqual(10);
+    expect(res.body.items[0].sellingStatus).toEqual(true);
+    expect(res.body.items[0].owner).toEqual(1);
+    expect(res.body.items[0].cityOfSwap).toEqual('Amman');
+    expect(res.body.items[0].countryOfSwap).toEqual('Jordan');
+    expect(res.body.items[0].swapFor).toEqual('test swap');
+  });
 
+  it('check get item by id', async () => {
+    const res = await request.get('/items/6');
+    expect(res.status).toEqual(200);
+    expect(res.body.item.name).toEqual('test item');
+    expect(res.body.item.description).toEqual('test description');
+    expect(res.body.item.sellingPrice).toEqual(10);
+    expect(res.body.item.sellingStatus).toEqual(true);
+    expect(res.body.item.owner).toEqual(1);
+    expect(res.body.item.cityOfSwap).toEqual('Amman');
+    expect(res.body.item.countryOfSwap).toEqual('Jordan');
+    expect(res.body.item.swapFor).toEqual('test swap');
+  });
 
-xdescribe( 'check item endpoints ', () => {
-
-  it( 'check get all items ', async () => {
-    const res = await request.get( '/items' );
-    expect( res.status ).toEqual( 200 );
-    expect( res.headers[ 'content-type' ] ).toEqual( expect.stringContaining( 'json' ) );
-  } );
-
-  it( 'check get one item by ID ', async () => {
-    const res = await request.get( '/items/2' );
-    expect( res.status ).toEqual( 200 );
-    expect( res.headers[ 'content-type' ] ).toEqual( expect.stringContaining( 'json' ) );
-  } );
-
-  it( 'check get ItemsByUser', async () => {
-    const res = await request.get( '/itemsbyuser/2' );
-    expect( res.status ).toEqual( 200 );
-    expect( res.headers[ 'content-type' ] ).toEqual( expect.stringContaining( 'json' ) );
-  } );
-
-  /*  it('check create item', async () => {
-     const res = await request.post('/items').send({
-       "name": "item",
-       "description": "item description",
-       "estimatedValue": 25,
-       "sellingStatus" : 'true',
-       "category": "Antique",
-       "owner": 1,
-       "cityOfSwap": "Amman",
-       "countryOfSwap": "Jordan",
-       "swapFor": "Anything",
-       "uploadedImages": ['']
-     });
-     expect(res.status).toEqual(200);
-     expect(res.headers['content-type']).toEqual(expect.stringContaining('json'));
-   }); */
-
-  it( 'check edit item by id', async () => {
-    const res = await request.post( '/items/7' ).send( {
-      "name": "item",
-      "description": "item description",
-      "estimatedValue": 25,
-      "category": "Antique",
+  it('check update item', async () => {
+    const res = await request.post('/items/4').send({
+      "name": "test item",
+      "description": "test description",
+      "sellingPrice": 10,
+      "sellingStatus": true,
       "owner": 1,
       "cityOfSwap": "Amman",
       "countryOfSwap": "Jordan",
-      "swapFor": "Anything",
-      "uploadedImages": [ '' ]
-    } );
-    expect( res.status ).toEqual( 200 );
-    expect( res.headers[ 'content-type' ] ).toEqual( expect.stringContaining( 'json' ) );
-  } );
+      "swapFor": "test swap",
+    });
+    expect(res.status).toEqual(200);
+    expect(res.body.item.name).toEqual('test item');
+    expect(res.body.item.description).toEqual('test description');
+    expect(res.body.item.sellingPrice).toEqual(10);
+    expect(res.body.item.sellingStatus).toEqual(true);
+    expect(res.body.item.owner).toEqual(1);
+    expect(res.body.item.cityOfSwap).toEqual('Amman');
+    expect(res.body.item.countryOfSwap).toEqual('Jordan');
+    expect(res.body.item.swapFor).toEqual('test swap');
+  });
 
-
-} );
-
-
-// test print the data coming from the response
-
-xdescribe( 'check the data coming from the response', () => {
-  it( 'check get all items ', async () => {
-    const res = await request.get( '/items' );
-    expect( res.body.items[ 0 ].cityOfSwap ).toEqual( 'Amman' );
-  } );
-
-  it( 'check get one item by ID ', async () => {
-    const res = await request.get( '/items/2' );
-    expect( res.body ).toEqual( expect.any( Object ) );
-  } );
-
-  it( 'check get ItemsByUser', async () => {
-    const res = await request.get( '/itemsbyuser/1' );
-    expect( res.body.items[ 0 ].estimatedValue ).toEqual( 25 );
-  } );
-  /* 
-    it('check create item', async () => {
-      const res = await request.post('/items').send({
-        "name": "item",
-        "description": "item description",
-        "estimatedValue": 25,
-        "sellingStatus": "true",
-        "category": "Antique",
-        "owner": 1,
-        "cityOfSwap": "Amman",
-        "countryOfSwap": "Jordan",
-        "swapFor": "Anything",
-        "uploadedImages": 'test'
-      });
-      expect(res.body).toEqual(expect.any(Object));
-    }); */
-
-  it( 'check edit item by id', async () => {
-    const res = await request.post( '/items/7' ).send( {
-      "name": "item",
-      "description": "item description",
-      "estimatedValue": 25,
-      "category": "Antique",
-      "owner": 1,
-      "cityOfSwap": "Amman",
-      "countryOfSwap": "Jordan",
-      "swapFor": "Anything",
-      "uploadedImages": [ '' ]
-    } );
-    expect( res.body ).toEqual( expect.any( Object ) );
-  } );
-
-} );
-
-
-
-
-
-
-
+  it('check delete item', async () => {
+    const res = await request.delete('/items/6');
+    expect(res.status).toEqual(200);
+  });
+});
