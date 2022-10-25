@@ -43,9 +43,8 @@ class Collection {
 
     async delete ( id ) {
         try {
-            const dataById = await this.model.findOne( { where: { id } } );
-            const deletedData = await dataById.destroy();
-            return deletedData;
+            const dataById = await this.model.destroy( { where: { id } } );
+            return dataById;
         }
         catch ( error ) {
             console.error( `Error during the deleting with the id: ${id}` );

@@ -58,7 +58,7 @@ const signup = async ( req, res ) => {
 
 const signin = async ( req, res ) => {
     try {
-        const basicAuth = req.headers.authorization.split( " " ).pop();
+        const basicAuth = req.headers.authorization?.split( " " ).pop();
         const [ username, password ] = base64.decode( basicAuth ).split( ":" );
         const user = await userModel.findOne( {
             where: {
