@@ -20,6 +20,7 @@ const signup = async ( req, res ) => {
             country,
             city,
         } = req.body;
+        console.log(req.body)
         
         const userInfo = {
             username,
