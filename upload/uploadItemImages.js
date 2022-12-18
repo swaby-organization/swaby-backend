@@ -6,7 +6,7 @@ const uuid = require( 'uuid' ).v4;
 
 const storage = multer.diskStorage( {
     destination: function ( req, file, callBack ) {
-        callBack( null, 'itemsImages' );
+        callBack( null, 'itemsImages/' );
     },
     filename: ( req, file, callBack ) => {
         callBack( null, file.fieldname + '-' + uuid() +path.extname( file.originalname ) );
